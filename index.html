@@ -45,8 +45,9 @@
       <p id="today-date" class="text-sm" style="color:#9c6bba;"></p>
     </div>
     <div class="flex gap-2">
-      <button onclick="exportCSV()" class="flex-1 sm:flex-none flex items-center justify-center gap-1 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors" style="background:linear-gradient(135deg,#34d399,#059669);">⬇ CSV</button>
-      <button onclick="exportImage()" class="flex-1 sm:flex-none flex items-center justify-center gap-1 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors" style="background:linear-gradient(135deg,#c084fc,#818cf8);">🖼 รูปภาพ</button>
+      <button onclick="exportCSV()" class="flex-1 sm:flex-none flex items-center justify-center gap-1 text-white text-sm font-semibold px-3 py-2.5 rounded-xl transition-colors" style="background:linear-gradient(135deg,#34d399,#059669);">⬇ CSV</button>
+      <button onclick="exportImage('summary')" class="flex-1 sm:flex-none flex items-center justify-center gap-1 text-white text-sm font-semibold px-3 py-2.5 rounded-xl transition-colors" style="background:linear-gradient(135deg,#c084fc,#818cf8);">🖼 สรุปยอด</button>
+      <button onclick="exportImage('full')" class="flex-1 sm:flex-none flex items-center justify-center gap-1 text-white text-sm font-semibold px-3 py-2.5 rounded-xl transition-colors" style="background:linear-gradient(135deg,#f472b6,#c084fc);">📋 รายการ</button>
     </div>
   </div>
 </header>
@@ -55,84 +56,75 @@
 
   <!-- DASHBOARD -->
   <section>
-    <h2 class="text-xs font-semibold uppercase tracking-wider mb-2 px-1" style="color:#9c6bba;letter-spacing:0.08em;">สรุปผลประจำวัน</h2>
-
     <!-- ยอดรวมใหญ่ -->
     <div class="rounded-2xl p-4 mb-3" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
       <p class="text-xs mb-1" style="color:#a07cc0;">ยอดขายรวมทั้งหมด</p>
-      <p id="d-total" class="text-3xl font-bold text-blue-600">0 ฿</p>
+      <p id="d-total" class="text-3xl font-bold" style="color:#7c3aed;">0 ฿</p>
     </div>
 
     <!-- หน้าร้าน -->
-    <p class="text-xs font-semibold uppercase tracking-wider mb-2 px-1" style="color:#9c6bba;letter-spacing:0.08em;">🏪 หน้าร้าน</p>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-2">
-      <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
+    <p class="text-xs font-semibold uppercase tracking-wider mb-2 px-1" style="color:#9c6bba;">🏪 หน้าร้าน</p>
+    <div class="grid grid-cols-3 gap-3 mb-2">
+      <div class="rounded-2xl p-3" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
         <p class="text-xs mb-1" style="color:#a07cc0;">ยอดหน้าร้าน</p>
-        <p id="d-shop" class="text-xl font-bold text-blue-600">0 ฿</p>
+        <p id="d-shop" class="text-lg font-bold" style="color:#2563eb;">0 ฿</p>
       </div>
-      <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
-        <p class="text-xs mb-1" style="color:#a07cc0;">เงินโอนรวม</p>
-        <p id="d-transfer" class="text-xl font-bold text-purple-600">0 ฿</p>
-      </div>
-      <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
+      <div class="rounded-2xl p-3" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
         <p class="text-xs mb-1" style="color:#a07cc0;">เงินสด</p>
-        <p id="d-cash" class="text-xl font-bold text-emerald-600">0 ฿</p>
+        <p id="d-cash" class="text-lg font-bold" style="color:#16a34a;">0 ฿</p>
       </div>
-      <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
+      <div class="rounded-2xl p-3" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
         <p class="text-xs mb-1" style="color:#a07cc0;">ค่าส่ง</p>
-        <p id="d-delivery-fee" class="text-xl font-bold text-teal-600">0 ฿</p>
+        <p id="d-delivery-fee" class="text-lg font-bold" style="color:#0d9488;">0 ฿</p>
       </div>
     </div>
-    <!-- โอนแยกราย -->
     <div class="grid grid-cols-3 gap-3 mb-3">
-      <div class="rounded-2xl p-4" style="background:rgba(237,220,255,0.65);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(200,160,255,0.5);">
+      <div class="rounded-2xl p-3" style="background:rgba(237,220,255,0.65);backdrop-filter:blur(10px);border:1px solid rgba(200,160,255,0.5);">
         <p class="text-xs mb-1" style="color:#7c3aed;">โอนป้าดำ</p>
-        <p id="d-t1" class="text-lg font-bold text-purple-600">0 ฿</p>
+        <p id="d-t1" class="text-lg font-bold" style="color:#7c3aed;">0 ฿</p>
       </div>
-      <div class="rounded-2xl p-4" style="background:rgba(237,220,255,0.65);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(200,160,255,0.5);">
+      <div class="rounded-2xl p-3" style="background:rgba(237,220,255,0.65);backdrop-filter:blur(10px);border:1px solid rgba(200,160,255,0.5);">
         <p class="text-xs mb-1" style="color:#7c3aed;">โอนลุงนัน</p>
-        <p id="d-t2" class="text-lg font-bold text-purple-600">0 ฿</p>
+        <p id="d-t2" class="text-lg font-bold" style="color:#7c3aed;">0 ฿</p>
       </div>
-      <div class="rounded-2xl p-4" style="background:rgba(237,220,255,0.65);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(200,160,255,0.5);">
+      <div class="rounded-2xl p-3" style="background:rgba(237,220,255,0.65);backdrop-filter:blur(10px);border:1px solid rgba(200,160,255,0.5);">
         <p class="text-xs mb-1" style="color:#7c3aed;">โอนปาล์ม</p>
-        <p id="d-t3" class="text-lg font-bold text-purple-600">0 ฿</p>
+        <p id="d-t3" class="text-lg font-bold" style="color:#7c3aed;">0 ฿</p>
       </div>
     </div>
 
-    <!-- เดลิเวอรี — คำนวณอัตโนมัติจากรายการ -->
-    <p class="text-xs font-semibold uppercase tracking-wider mb-2 px-1" style="color:#9c6bba;letter-spacing:0.08em;">🛵 เดลิเวอรี (คำนวณจากรายการอัตโนมัติ)</p>
+    <!-- เดลิเวอรี -->
+    <p class="text-xs font-semibold uppercase tracking-wider mb-2 px-1" style="color:#9c6bba;">🛵 เดลิเวอรี (คำนวณจากรายการอัตโนมัติ)</p>
     <div class="grid grid-cols-3 gap-3 mb-3">
-      <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
+      <div class="rounded-2xl p-3" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
         <p class="text-xs mb-1" style="color:#a07cc0;">Grab</p>
-        <p id="d-grab" class="text-lg font-bold text-green-600">0 ฿</p>
+        <p id="d-grab" class="text-lg font-bold" style="color:#16a34a;">0 ฿</p>
         <p id="d-grab-qty" class="text-xs mt-1" style="color:#a07cc0;">0 กล่อง</p>
       </div>
-      <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
+      <div class="rounded-2xl p-3" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
         <p class="text-xs mb-1" style="color:#a07cc0;">LINE MAN</p>
-        <p id="d-lineman" class="text-lg font-bold text-lime-600">0 ฿</p>
+        <p id="d-lineman" class="text-lg font-bold" style="color:#65a30d;">0 ฿</p>
         <p id="d-lineman-qty" class="text-xs mt-1" style="color:#a07cc0;">0 กล่อง</p>
       </div>
-      <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
+      <div class="rounded-2xl p-3" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
         <p class="text-xs mb-1" style="color:#a07cc0;">ShopeeFood</p>
-        <p id="d-shopeefood" class="text-lg font-bold text-orange-500">0 ฿</p>
+        <p id="d-shopeefood" class="text-lg font-bold" style="color:#ea580c;">0 ฿</p>
         <p id="d-shopeefood-qty" class="text-xs mt-1" style="color:#a07cc0;">0 กล่อง</p>
       </div>
     </div>
 
-    <!-- จำนวน -->
+    <!-- รวม -->
     <div class="grid grid-cols-2 gap-3">
-      <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
+      <div class="rounded-2xl p-3" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
         <p class="text-xs mb-1" style="color:#a07cc0;">จำนวนลูกค้า</p>
-        <p id="d-customers" class="text-xl font-bold text-gray-800">0 คน</p>
+        <p id="d-customers" class="text-xl font-bold" style="color:#3d2c5e;">0 คน</p>
       </div>
-      <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
+      <div class="rounded-2xl p-3" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
         <p class="text-xs mb-1" style="color:#a07cc0;">กล่องรวม</p>
-        <p id="d-qty" class="text-xl font-bold text-orange-500">0 กล่อง</p>
+        <p id="d-qty" class="text-xl font-bold" style="color:#f97316;">0 กล่อง</p>
       </div>
     </div>
   </section>
-
-
 
   <!-- QUICK SUMMARY ROW -->
   <section class="rounded-2xl px-4 py-3" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);">
@@ -214,7 +206,7 @@
             <th class="text-right px-3 py-2.5 font-semibold" style="color:#a07cc0;">ราคา/ชิ้น</th>
             <th class="text-right px-3 py-2.5 font-semibold" style="color:#a07cc0;">ยอดรวม</th>
             <th class="text-center px-3 py-2.5 font-semibold hidden sm:table-cell">ช่องทาง</th>
-            <th class="text-center px-3 py-2.5 font-semibold" style="color:#a07cc0;">ลบ</th>
+            <th class="text-center px-3 py-2.5 font-semibold" style="color:#a07cc0;">ชำระ</th>
           </tr>
         </thead>
         <tbody id="items-body">
@@ -227,38 +219,48 @@
 </div>
 
 <!-- SNAPSHOT CARD -->
-<div id="snapshot-card" style="position:fixed;left:-9999px;top:0;width:680px;padding:32px;background:linear-gradient(135deg,#1e3a5f 0%,#2e75b6 100%);font-family:-apple-system,BlinkMacSystemFont,'Noto Sans Thai',sans-serif;">
-  <div style="text-align:center;margin-bottom:20px;">
-    <div style="font-size:26px;margin-bottom:4px;">📒</div>
-    <div style="font-size:20px;font-weight:700;color:#fff;">สรุปยอดขายประจำวัน</div>
-    <div id="snap-date" style="font-size:13px;color:#bdd7ee;margin-top:4px;"></div>
+<div id="snapshot-card" style="position:fixed;left:-9999px;top:0;width:680px;padding:20px;background:linear-gradient(135deg,#1e3a5f 0%,#2e75b6 100%);font-family:-apple-system,BlinkMacSystemFont,'Noto Sans Thai',sans-serif;">
+  <div style="text-align:center;margin-bottom:10px;">
+    <div style="font-size:20px;margin-bottom:2px;">📒</div>
+    <div style="font-size:16px;font-weight:700;color:#fff;">สรุปยอดขายประจำวัน</div>
+    <div id="snap-date" style="font-size:11px;color:#bdd7ee;margin-top:2px;"></div>
   </div>
-  <div style="background:rgba(255,255,255,0.12);border-radius:14px;padding:16px;text-align:center;margin-bottom:14px;">
-    <div style="font-size:12px;color:#bdd7ee;margin-bottom:2px;">ยอดขายรวมทั้งหมด</div>
-    <div id="snap-total" style="font-size:38px;font-weight:800;color:#fff;">0 ฿</div>
+  <div style="background:rgba(255,255,255,0.12);border-radius:8px;padding:7px;text-align:center;margin-bottom:10px;">
+    <div style="font-size:10px;color:#bdd7ee;margin-bottom:2px;">ยอดขายรวมทั้งหมด</div>
+    <div id="snap-total" style="font-size:28px;font-weight:800;color:#fff;">0 ฿</div>
   </div>
-  <div style="font-size:11px;font-weight:600;color:#bdd7ee;margin-bottom:8px;text-transform:uppercase;">🏪 หน้าร้าน</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:14px;">
-    <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:12px;text-align:center;">
-      <div style="font-size:10px;color:#bdd7ee;margin-bottom:3px;">ยอดหน้าร้าน</div>
-      <div id="snap-shop" style="font-size:15px;font-weight:700;color:#93c5fd;">0 ฿</div>
+  <div style="font-size:10px;font-weight:600;color:#bdd7ee;margin-bottom:5px;text-transform:uppercase;">🏪 หน้าร้าน</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-bottom:5px;">
+    <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:10px;text-align:center;">
+      <div style="font-size:9px;color:#bdd7ee;margin-bottom:2px;">ยอดหน้าร้าน</div>
+      <div id="snap-shop" style="font-size:14px;font-weight:700;color:#93c5fd;">0 ฿</div>
     </div>
-    <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:12px;text-align:center;">
-      <div style="font-size:10px;color:#bdd7ee;margin-bottom:3px;">เงินโอนรวม</div>
-      <div id="snap-transfer" style="font-size:15px;font-weight:700;color:#c5a3ff;">0 ฿</div>
-    </div>
-    <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:12px;text-align:center;">
+    <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:10px;text-align:center;">
       <div style="font-size:10px;color:#bdd7ee;margin-bottom:3px;">เงินสด</div>
-      <div id="snap-cash" style="font-size:15px;font-weight:700;color:#6ee7b7;">0 ฿</div>
+      <div id="snap-cash" style="font-size:14px;font-weight:700;color:#6ee7b7;">0 ฿</div>
     </div>
-    <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:12px;text-align:center;">
+    <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:10px;text-align:center;">
       <div style="font-size:10px;color:#bdd7ee;margin-bottom:3px;">ค่าส่ง</div>
-      <div id="snap-delfee" style="font-size:15px;font-weight:700;color:#5eead4;">0 ฿</div>
+      <div id="snap-delfee" style="font-size:14px;font-weight:700;color:#5eead4;">0 ฿</div>
     </div>
   </div>
-  <div style="font-size:11px;font-weight:600;color:#bdd7ee;margin-bottom:8px;text-transform:uppercase;">🛵 เดลิเวอรี</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">
-    <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:12px;text-align:center;">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-bottom:10px;">
+    <div style="background:rgba(180,130,255,0.25);border-radius:10px;padding:10px;text-align:center;">
+      <div style="font-size:10px;color:#bdd7ee;margin-bottom:3px;">โอนป้าดำ</div>
+      <div id="snap-t1" style="font-size:13px;font-weight:700;color:#c5a3ff;">0 ฿</div>
+    </div>
+    <div style="background:rgba(180,130,255,0.25);border-radius:10px;padding:10px;text-align:center;">
+      <div style="font-size:10px;color:#bdd7ee;margin-bottom:3px;">โอนลุงนัน</div>
+      <div id="snap-t2" style="font-size:14px;font-weight:700;color:#c5a3ff;">0 ฿</div>
+    </div>
+    <div style="background:rgba(180,130,255,0.25);border-radius:10px;padding:10px;text-align:center;">
+      <div style="font-size:10px;color:#bdd7ee;margin-bottom:3px;">โอนปาล์ม</div>
+      <div id="snap-t3" style="font-size:14px;font-weight:700;color:#c5a3ff;">0 ฿</div>
+    </div>
+  </div>
+    <div style="font-size:10px;font-weight:600;color:#bdd7ee;margin-bottom:5px;text-transform:uppercase;">🛵 เดลิเวอรี</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-bottom:10px;">
+    <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:7px;text-align:center;">
       <div style="font-size:10px;color:#bdd7ee;margin-bottom:3px;">Grab</div>
       <div id="snap-grab" style="font-size:15px;font-weight:700;color:#86efac;">0 ฿</div>
       <div id="snap-grab-qty" style="font-size:10px;color:#bdd7ee;margin-top:2px;">0 กล่อง</div>
@@ -274,7 +276,7 @@
       <div id="snap-shopeefood-qty" style="font-size:10px;color:#bdd7ee;margin-top:2px;">0 กล่อง</div>
     </div>
   </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:10px;">
     <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:12px;text-align:center;">
       <div style="font-size:10px;color:#bdd7ee;margin-bottom:3px;">จำนวนลูกค้า</div>
       <div id="snap-customers" style="font-size:15px;font-weight:700;color:#fff;">0 คน</div>
@@ -284,12 +286,13 @@
       <div id="snap-qty" style="font-size:15px;font-weight:700;color:#fbbf24;">0 กล่อง</div>
     </div>
   </div>
-  <div style="background:rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;margin-bottom:14px;">
-    <div style="display:grid;grid-template-columns:1fr 60px 80px 90px;background:rgba(0,0,0,0.2);padding:10px 14px;">
+  <div id="snap-items-wrapper" style="background:rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;margin-bottom:14px;">
+    <div style="display:grid;grid-template-columns:1fr 55px 70px 80px 80px;background:rgba(0,0,0,0.2);padding:10px 14px;">
       <div style="font-size:11px;font-weight:600;color:#bdd7ee;">เมนู</div>
       <div style="font-size:11px;font-weight:600;color:#bdd7ee;text-align:center;">กล่อง</div>
       <div style="font-size:11px;font-weight:600;color:#bdd7ee;text-align:right;">ราคา/ชิ้น</div>
       <div style="font-size:11px;font-weight:600;color:#bdd7ee;text-align:right;">ยอดรวม</div>
+      <div style="font-size:11px;font-weight:600;color:#bdd7ee;text-align:center;">ช่องทาง</div>
     </div>
     <div id="snap-items"></div>
   </div>
@@ -418,7 +421,6 @@ function updateDashboard() {
   const s = calcStats();
   document.getElementById('d-total').textContent         = fmt(s.grandTotal)+' ฿';
   document.getElementById('d-shop').textContent          = fmt(s.shopTotal)+' ฿';
-  document.getElementById('d-transfer').textContent      = fmt(s.transferTotal)+' ฿';
   document.getElementById('d-t1').textContent            = fmt(s.t1Total)+' ฿';
   document.getElementById('d-t2').textContent            = fmt(s.t2Total)+' ฿';
   document.getElementById('d-t3').textContent            = fmt(s.t3Total)+' ฿';
@@ -510,15 +512,17 @@ function refreshDatalist() {
   // updated via showSuggestions
 }
 
-function exportImage() {
+function exportImage(mode='summary') {
   if (!items.length) { toast('ยังไม่มีรายการ'); return; }
   const s = calcStats();
   const d = new Date();
   document.getElementById('snap-date').textContent = d.toLocaleDateString('th-TH',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   document.getElementById('snap-total').textContent        = fmt(s.grandTotal)+' ฿';
   document.getElementById('snap-shop').textContent         = fmt(s.shopTotal)+' ฿';
-  document.getElementById('snap-transfer').textContent     = fmt(s.transferTotal)+' ฿';
-  document.getElementById('snap-cash').textContent         = fmt(summary.cash)+' ฿';
+  document.getElementById('snap-t1').textContent            = fmt(s.t1Total)+' ฿';
+  document.getElementById('snap-t2').textContent            = fmt(s.t2Total)+' ฿';
+  document.getElementById('snap-t3').textContent            = fmt(s.t3Total)+' ฿';
+  document.getElementById('snap-cash').textContent         = fmt(s.cashTotal)+' ฿';
   document.getElementById('snap-delfee').textContent       = fmt(summary.deliveryFee)+' ฿';
   document.getElementById('snap-grab').textContent         = fmt(s.grabTotal)+' ฿';
   document.getElementById('snap-grab-qty').textContent     = s.grabQty+' กล่อง';
@@ -528,16 +532,24 @@ function exportImage() {
   document.getElementById('snap-shopeefood-qty').textContent = s.shopeeQty+' กล่อง';
   document.getElementById('snap-customers').textContent    = fmt(summary.customers)+' คน';
   document.getElementById('snap-qty').textContent          = fmt(s.totalQty)+' กล่อง';
-  document.getElementById('snap-items').innerHTML = items.map((it,i)=>`
-    <div style="display:grid;grid-template-columns:1fr 60px 80px 90px;padding:9px 14px;background:${i%2?'rgba(0,0,0,0.08)':'rgba(255,255,255,0.06)'};align-items:center;">
-      <div style="font-size:13px;font-weight:600;color:#fff;">${esc(it.name)}</div>
-      <div style="font-size:13px;color:#e2e8f0;text-align:center;">${it.qty}</div>
-      <div style="font-size:13px;color:#cbd5e1;text-align:right;">${fmt(it.price)} ฿</div>
-      <div style="font-size:14px;font-weight:700;color:#fbbf24;text-align:right;">${fmt(it.total)} ฿</div>
-    </div>`).join('');
+  const snapItemsEl = document.getElementById('snap-items');
+  const snapItemsWrapper = document.getElementById('snap-items-wrapper');
+  if (mode === 'summary') {
+    snapItemsWrapper.style.display = 'none';
+  } else {
+    snapItemsWrapper.style.display = 'block';
+    snapItemsEl.innerHTML = items.map((it,i)=>`
+      <div style="display:grid;grid-template-columns:1fr 55px 70px 80px 80px;padding:9px 14px;background:${i%2?'rgba(0,0,0,0.08)':'rgba(255,255,255,0.06)'};align-items:center;">
+        <div style="font-size:13px;font-weight:600;color:#fff;">${esc(it.name)}</div>
+        <div style="font-size:13px;color:#e2e8f0;text-align:center;">${it.qty}</div>
+        <div style="font-size:13px;color:#cbd5e1;text-align:right;">${fmt(it.price)} ฿</div>
+        <div style="font-size:14px;font-weight:700;color:#fbbf24;text-align:right;">${fmt(it.total)} ฿</div>
+        <div style="font-size:10px;color:#bdd7ee;text-align:center;">${esc(it.channel)}</div>
+      </div>`).join('');
+  }
   const card = document.getElementById('snapshot-card');
   card.style.display = 'block';
-  toast('กำลังสร้างรูปภาพ...');
+  toast(mode==='summary' ? 'กำลังสร้างรูปสรุปยอด...' : 'กำลังสร้างรูปรายการ...');
   html2canvas(card,{scale:2,useCORS:true,backgroundColor:null,logging:false}).then(canvas=>{
     card.style.display='none';
     const dateStr=`${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
@@ -569,8 +581,10 @@ function exportCSV() {
     'โอนป้าดำ(บาท),'+summary.t1,
     'โอนลุงนัน(บาท),'+summary.t2,
     'โอนปาล์ม(บาท),'+summary.t3,
-    'เงินโอนรวม(บาท),'+s.transferTotal,
-    'เงินสด(บาท),'+summary.cash,
+    'โอนป้าดำ(บาท),'+s.t1Total,
+    'โอนลุงนัน(บาท),'+s.t2Total,
+    'โอนปาล์ม(บาท),'+s.t3Total,
+    'เงินสด(บาท),'+s.cashTotal,
     'ค่าส่ง(บาท),'+summary.deliveryFee,
     'Grab(บาท),'+s.grabTotal+',กล่อง,'+s.grabQty,
     'LINE MAN(บาท),'+s.linemanTotal+',กล่อง,'+s.linemanQty,
