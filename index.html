@@ -334,8 +334,17 @@ function addItem() {
   const payment = channel === 'หน้าร้าน' ? document.getElementById('f-payment').value : channel;
   if (!name) { document.getElementById('f-name').focus(); toast('กรุณาใส่ชื่อสินค้า'); return; }
   if (!price) { document.getElementById('f-price').focus(); toast('กรุณาใส่ราคา'); return; }
-  const item = { id: Date.now(), name, qty, price, total: qty*price, channel, payment };
-  items.push(item);
+  // Check for existing item with same name + channel + payment
+  const existing = items.find(i => i.name === name && i.price === price && i.channel === channel && i.payment === payment);
+  if (existing) {
+    existing.qty += qty;
+    existing.total = existing.qty * existing.price;
+    toast('รวม "' + name + '" แล้ว ✓');
+  } else {
+    const item = { id: Date.now(), name, qty, price, total: qty*price, channel, payment };
+    items.push(item);
+    toast('เพิ่ม "' + name + '" แล้ว ✓');
+  }
   localStorage.setItem('salesItems', JSON.stringify(items));
   if (!savedProducts.includes(name)) {
     savedProducts.push(name);
@@ -347,7 +356,6 @@ function addItem() {
   document.getElementById('f-price').value = '';
   document.getElementById('f-name').focus();
   render();
-  toast('เพิ่ม "' + name + '" แล้ว ✓');
 }
 
 function removeItem(id) {
